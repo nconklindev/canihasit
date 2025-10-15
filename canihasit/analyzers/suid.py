@@ -42,8 +42,6 @@ class SuidAnalyzer:
                     title=f"{bit_type} binary found",
                     severity=severity,
                     path=binary.path,
-                    description=f"{bit_type} bit set on {binary.name}",
-                    remediation=f"Review if {binary.name} requires elevated privileges",
                 )
             )
 
