@@ -1,4 +1,3 @@
-# canihasit/analyzers/sudo.py
 from ..models import SudoPermission, Finding, Severity
 
 
@@ -33,52 +32,60 @@ class SudoAnalyzer:
     }
 
     def analyze(self, permissions: list[SudoPermission]) -> list[Finding]:
-        """Analyze sudo permissions for risks"""
-        findings = []
+        """Analyze sudo permissions for risks (micro-optimized, same behavior)"""
+        findings: list[Finding] = []
+        append = findings.append
+        spawners = self.SHELL_SPAWNERS
+        f = Finding
+        sev = Severity
+        crit = sev.CRITICAL
+        high = sev.HIGH
 
         for perm in permissions:
-            if perm.command == "WRITABLE_SUDOERS_D":
-                findings.append(
-                    Finding(
+            cmd = perm.command
+            if cmd == "WRITABLE_SUDOERS_D":
+                append(
+                    f(
                         title="Writable /etc/sudoers.d/ directory",
-                        severity=Severity.CRITICAL,
+                        severity=crit,
                         path="/etc/sudoers.d/",
                     )
                 )
                 continue
 
-            # Extract binary name from command
-            binary = self._extract_binary(perm.command)
+            # Extract binary name from command with minimal parsing
+            parts = cmd.split()
+            binary = parts[0].rpartition("/")[2] if parts else ""
 
             # Check for dangerous configurations
             if perm.run_as in ("ALL", "root"):
-                if binary in self.SHELL_SPAWNERS:
-                    severity = Severity.CRITICAL if perm.nopasswd else Severity.HIGH
+                if binary in spawners:
+                    severity = crit if perm.nopasswd else high
 
-                    findings.append(
-                        Finding(
+                    append(
+                        f(
                             title=f"Dangerous sudo permission: {binary}",
                             severity=severity,
-                            path=perm.command,
+                            path=cmd,
                         )
                     )
 
                 # Check for wildcards
-                elif "*" in perm.command:
-                    findings.append(
-                        Finding(
+                elif "*" in cmd:
+                    append(
+                        f(
                             title="Sudo wildcard detected",
-                            severity=Severity.HIGH,
-                            path=perm.command,
+                            severity=high,
+                            path=cmd,
                         )
                     )
 
                 # (ALL) ALL case
-                elif perm.command == "ALL":
-                    findings.append(
-                        Finding(
+                elif cmd == "ALL":
+                    append(
+                        f(
                             title="Full sudo access granted",
-                            severity=Severity.CRITICAL,
+                            severity=crit,
                             path="(ALL) ALL",
                         )
                     )

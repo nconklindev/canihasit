@@ -1,4 +1,3 @@
-# canihasit/scanners/sudo.py
 import subprocess
 import os
 from pathlib import Path

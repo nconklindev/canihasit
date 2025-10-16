@@ -1,4 +1,3 @@
-# canihasit/analyzers/suid.py
 from ..models import SuidBinary, Finding, Severity
 
 
@@ -9,6 +8,7 @@ class SuidAnalyzer:
     def __init__(self):
         pass
 
+    # TODO: Use GTFO Bins at some point
     RISKY_BINARIES = {
         "nmap",
         "vim",
@@ -30,15 +30,24 @@ class SuidAnalyzer:
     }
 
     def analyze(self, binaries: list[SuidBinary]) -> list[Finding]:
-        """Analyze SUID/SGID binaries and create findings"""
-        findings = []
+        """Analyze SUID/SGID binaries and create findings
+        
+        Optimized for reduced per-item overhead while preserving behavior.
+        """
+        findings: list[Finding] = []
+        append = findings.append
+        risky = self.RISKY_BINARIES
+        High = Severity.HIGH
+        Medium = Severity.MEDIUM
+        F = Finding
 
         for binary in binaries:
-            severity = self._determine_severity(binary.name)
+            # Inline severity determination to avoid function call overhead
+            severity = High if binary.name in risky else Medium
             bit_type = "SUID" if binary.is_suid else "SGID"
 
-            findings.append(
-                Finding(
+            append(
+                F(
                     title=f"{bit_type} binary found",
                     severity=severity,
                     path=binary.path,

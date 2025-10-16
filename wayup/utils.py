@@ -1,4 +1,3 @@
-# canihasit/utils.py
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.console import Console
 

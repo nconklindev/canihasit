@@ -1,4 +1,3 @@
-# canihasit/scanners/user_information.py
 import os
 import pwd
 import grp

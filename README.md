@@ -1,4 +1,4 @@
-# canihasit 🔓
+# wayup 🔓
 
 A privilege escalation detection tool for Linux systems, inspired by [linpeas](https://github.com/carlospolop/PEASS-ng). Built with Python and designed for security assessments and penetration testing.
 
@@ -38,14 +38,14 @@ pip install --user pipx
 # Ensure pipx is in PATH
 pipx ensurepath
 
-# Clone and install canihasit
-git clone https://github.com/nconklindev/canihasit.git
-cd canihasit
+# Clone and install wayup
+git clone https://github.com/nconklindev/wayup.git
+cd wayup
 pipx install .
 
 # Run from anywhere
 cd ~
-canihasit
+wayup
 ```
 
 **Using uv tool:**
@@ -53,23 +53,23 @@ canihasit
 # Install uv if you don't have it
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Clone and install canihasit
-git clone https://github.com/nconklindev/canihasit.git
-cd canihasit
+# Clone and install wayup
+git clone https://github.com/nconklindev/wayup.git
+cd wayup
 uv tool install .
 
 # Run from anywhere
 cd ~
-canihasit
+wayup
 ```
 
 **Quick install from GitHub (without cloning):**
 ```bash
 # With pipx
-pipx install git+https://github.com/nconklindev/canihasit.git
+pipx install git+https://github.com/nconklindev/wayup.git
 
 # Or with uv
-uv tool install git+https://github.com/nconklindev/canihasit.git
+uv tool install git+https://github.com/nconklindev/wayup.git
 ```
 
 ### Development Installation
@@ -77,8 +77,8 @@ uv tool install git+https://github.com/nconklindev/canihasit.git
 For contributing or local development:
 ```bash
 # Clone the repository
-git clone https://github.com/nconklindev/canihasit.git
-cd canihasit
+git clone https://github.com/nconklindev/wayup.git
+cd wayup
 
 # Install uv if you don't have it installed
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -87,34 +87,34 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 uv sync
 
 # Run in development mode (from project directory)
-uv run python -m canihasit
+uv run python -m wayup
 
 # Or install in editable mode
 uv pip install -e .
-canihasit
+wayup
 ```
 
 ### Uninstall
 ```bash
 # If installed with pipx
-pipx uninstall canihasit
+pipx uninstall wayup
 
 # If installed with uv tool
-uv tool uninstall canihasit
+uv tool uninstall wayup
 ```
 
 ## 📖 Usage
 ```bash
 # Run the scanner (works from any directory after installation)
-canihasit
+wayup
 ```
 
 ### Example Output
 ```
 ╭───────────────────────────────────────────────────────────╮
-│                         canihasit                         │
+│                         wayup                         │
 │               Privilege Escalation Detector               │
-│ by nconklindev - https://github.com/nconklindev/canihasit │
+│ by nconklindev - https://github.com/nconklindev/wayup │
 │                                                           │
 ╰───────────────────────── v0.1.0 ──────────────────────────╯
 
@@ -165,27 +165,34 @@ Found 47 binaries
 ### Setup Development Environment
 ```bash
 # Clone and install dependencies
-git clone https://github.com/nconklindev/canihasit.git
-cd canihasit
+git clone https://github.com/nconklindev/wayup.git
+cd wayup
 uv sync
 
+# Install in editable mode
+uv pip install -e .
+
 # Run in development mode
-uv run python -m canihasit
+uv run python -m wayup
+
+# Or
+wayup
 
 # Format code with black
-uv run black canihasit/
+cd wayup # if not in project root
+uvx black .
 
 # Run tests (when available)
-uv run pytest
+uvx pytest
 ```
 
 ### Adding a New Scanner
 
-1. Create scanner in `canihasit/scanners/`
-2. Create analyzer in `canihasit/analyzers/`
-3. Add data model in `canihasit/models.py`
-4. Create display function in `canihasit/output.py`
-5. Integrate in `canihasit/cli.py`
+1. Create scanner in `wayup/scanners/`
+2. Create analyzer in `wayup/analyzers/`
+3. Add a data model in `wayup/models.py`
+4. Create display function in `wayup/output.py`
+5. Integrate in `wayup/cli.py`
 
 ## 📚 References
 
@@ -217,7 +224,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 [@nconklindev](https://github.com/nconklindev)
 
-Project Link: [https://github.com/nconklindev/canihasit](https://github.com/nconklindev/canihasit)
+Project Link: [https://github.com/nconklindev/wayup](https://github.com/nconklindev/wayup)
 
 ---
 

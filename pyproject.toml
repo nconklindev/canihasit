@@ -1,5 +1,5 @@
 [project]
-name = "canihasit"
+name = "wayup"
 version = "0.1.0"
 description = "A privilege escalation detection tool for identifying potential security vulnerabilities on Linux systems"
 readme = "README.md"
@@ -10,10 +10,13 @@ authors = [
 license = { text = "MIT" }
 keywords = [ "security", "pentesting", "privilege escalation", "linux" ]
 dependencies = [
-    "black>=25.9.0",
     "click>=8.3.0",
     "rich>=14.2.0",
 ]
 
+[dependency-groups]
+dev = ["pytest"]
+lint = ["black"]
+
 [project.scripts]
-canihasit = "canihasit.cli:main"
+wayup = "wayup.cli:main"
